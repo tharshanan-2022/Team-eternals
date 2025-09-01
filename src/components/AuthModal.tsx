@@ -41,6 +41,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
     confirmPassword: ''
   });
 
+  //use Api
   const API_BASE_URL = 'http://localhost:5000/api';
 
   const resetForms = () => {
