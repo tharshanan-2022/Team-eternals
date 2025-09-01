@@ -1,0 +1,125 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for realistic van lighting -->
+    <linearGradient id="vanBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#F3F4F6;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#E5E7EB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D1D5DB;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="vanSideGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F9FAFB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E5E7EB;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="wheelGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#4B5563;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111827;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="glassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DBEAFE;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#93C5FD;stop-opacity:0.7" />
+    </linearGradient>
+    <linearGradient id="shadowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9CA3AF;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#6B7280;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Van Shadow -->
+  <ellipse cx="200" cy="275" rx="190" ry="20" fill="#00000030"/>
+  
+  <!-- Van Main Body with realistic curves -->
+  <path d="M65 145 Q65 140 70 140 L335 140 Q340 140 340 145 L340 215 Q340 220 335 220 L70 220 Q65 220 65 215 Z" fill="url(#vanBodyGradient)" stroke="#D1D5DB" stroke-width="2"/>
+  
+  <!-- Van Body Highlight -->
+  <path d="M70 145 L330 145 Q335 145 335 150 L335 165 Q330 160 325 160 L75 160 Q70 160 70 165 Z" fill="#FFFFFF" opacity="0.6"/>
+  
+  <!-- Van Cargo Area with realistic depth -->
+  <path d="M185 105 Q185 100 190 100 L335 100 Q340 100 340 105 L340 155 Q340 160 335 160 L190 160 Q185 160 185 155 Z" fill="url(#vanSideGradient)" stroke="#D1D5DB" stroke-width="2"/>
+  
+  <!-- Cargo Area Highlight -->
+  <path d="M190 105 L330 105 Q335 105 335 110 L335 125 Q330 120 325 120 L195 120 Q190 120 190 125 Z" fill="#FFFFFF" opacity="0.5"/>
+  
+  <!-- Van Cab with realistic perspective -->
+  <path d="M65 145 Q65 125 70 120 Q75 105 85 100 L180 100 Q185 100 185 105 L185 155 Q185 160 180 160 L70 160 Q65 160 65 155 Z" fill="url(#vanSideGradient)" stroke="#D1D5DB" stroke-width="2"/>
+  
+  <!-- Cab Highlight -->
+  <path d="M75 110 L175 110 Q180 110 180 115 L180 130 Q175 125 170 125 L80 125 Q75 125 75 130 Z" fill="#FFFFFF" opacity="0.5"/>
+  
+  <!-- Windshield with realistic reflection -->
+  <path d="M85 100 Q90 100 95 105 L170 105 Q175 105 175 110 L175 125 Q170 130 165 135 L95 135 Q90 140 85 145 Z" fill="url(#glassGradient)" stroke="#3B82F6" stroke-width="1"/>
+  <!-- Windshield reflection -->
+  <path d="M95 110 L165 110 Q170 110 170 115 L170 125 Q165 120 160 120 L100 120 Q95 120 95 125 Z" fill="#FFFFFF" opacity="0.4"/>
+  
+  <!-- Side Windows with realistic glass effect -->
+  <rect x="195" y="115" width="35" height="20" rx="3" fill="url(#glassGradient)" stroke="#3B82F6" stroke-width="0.5"/>
+  <rect x="245" y="115" width="35" height="20" rx="3" fill="url(#glassGradient)" stroke="#3B82F6" stroke-width="0.5"/>
+  <rect x="295" y="115" width="35" height="20" rx="3" fill="url(#glassGradient)" stroke="#3B82F6" stroke-width="0.5"/>
+  <!-- Window reflections -->
+  <rect x="197" y="117" width="15" height="8" rx="2" fill="#FFFFFF" opacity="0.3"/>
+  <rect x="247" y="117" width="15" height="8" rx="2" fill="#FFFFFF" opacity="0.3"/>
+  <rect x="297" y="117" width="15" height="8" rx="2" fill="#FFFFFF" opacity="0.3"/>
+  
+  <!-- Rear Doors with realistic depth -->
+  <path d="M270 100 Q270 105 270 110 L270 215 Q270 220 270 220" stroke="#9CA3AF" stroke-width="2" fill="none"/>
+  <ellipse cx="280" cy="165" rx="6" ry="3" fill="#6B7280" stroke="#4B5563" stroke-width="1"/>
+  <ellipse cx="260" cy="165" rx="6" ry="3" fill="#6B7280" stroke="#4B5563" stroke-width="1"/>
+  
+  <!-- Side Door with realistic handle -->
+  <path d="M220 145 Q220 150 220 155 L220 215 Q220 220 220 220" stroke="#9CA3AF" stroke-width="2" fill="none"/>
+  <ellipse cx="230" cy="175" rx="6" ry="3" fill="#6B7280" stroke="#4B5563" stroke-width="1"/>
+  
+  <!-- Realistic Wheels with detailed rims -->
+  <circle cx="115" cy="245" r="38" fill="url(#wheelGradient)" stroke="#000000" stroke-width="3"/>
+  <circle cx="115" cy="245" r="28" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+  <circle cx="115" cy="245" r="18" fill="#6B7280" stroke="#374151" stroke-width="1"/>
+  <circle cx="115" cy="245" r="10" fill="#D1D5DB" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <circle cx="285" cy="245" r="38" fill="url(#wheelGradient)" stroke="#000000" stroke-width="3"/>
+  <circle cx="285" cy="245" r="28" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+  <circle cx="285" cy="245" r="18" fill="#6B7280" stroke="#374151" stroke-width="1"/>
+  <circle cx="285" cy="245" r="10" fill="#D1D5DB" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- Wheel spokes -->
+  <g stroke="#E5E7EB" stroke-width="1" opacity="0.8">
+    <line x1="115" y1="233" x2="115" y2="257"/>
+    <line x1="103" y1="245" x2="127" y2="245"/>
+    <line x1="285" y1="233" x2="285" y2="257"/>
+    <line x1="273" y1="245" x2="297" y2="245"/>
+  </g>
+  
+  <!-- Modern LED Headlights -->
+  <ellipse cx="50" cy="155" rx="15" ry="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2"/>
+  <ellipse cx="50" cy="155" rx="10" ry="8" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="175" rx="12" ry="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+  <ellipse cx="50" cy="155" rx="6" ry="5" fill="#FBBF24"/>
+  <ellipse cx="45" cy="170" rx="8" ry="6" fill="#FBBF24"/>
+  
+  <!-- Taillights -->
+  <ellipse cx="355" cy="150" rx="8" ry="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <ellipse cx="355" cy="170" rx="8" ry="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <ellipse cx="355" cy="150" rx="5" ry="5" fill="#F87171"/>
+  <ellipse cx="355" cy="170" rx="5" ry="5" fill="#F87171"/>
+  
+  <!-- Side Mirrors -->
+  <ellipse cx="75" cy="125" rx="8" ry="5" fill="#374151" stroke="#1F2937" stroke-width="1"/>
+  <ellipse cx="75" cy="125" rx="5" ry="3" fill="#6B7280"/>
+  
+  <!-- Grille -->
+  <rect x="35" y="145" width="15" height="30" rx="3" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+  <line x1="38" y1="150" x2="38" y2="170" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="42" y1="150" x2="42" y2="170" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="46" y1="150" x2="46" y2="170" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- License Plate -->
+  <rect x="40" y="190" width="30" height="10" rx="2" fill="#FFFFFF" stroke="#374151" stroke-width="1"/>
+  
+  <!-- Roof Rails -->
+  <rect x="65" y="95" width="270" height="4" rx="2" fill="#374151" stroke="#1F2937" stroke-width="1"/>
+  
+  <!-- Company Logo Area -->
+  <rect x="200" y="150" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#047857" stroke-width="1" opacity="0.9"/>
+  
+  <!-- Cargo Door Handle -->
+  <rect x="320" y="180" width="6" height="15" rx="3" fill="#9CA3AF" stroke="#6B7280" stroke-width="1"/>
+</svg>

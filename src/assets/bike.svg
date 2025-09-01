@@ -1,0 +1,144 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for realistic motorcycle lighting -->
+    <linearGradient id="bikeFrameGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC2626;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#B91C1C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#991B1B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="engineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6B7280;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#374151;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="wheelGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#4B5563;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111827;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="tankGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F87171;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#EF4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DC2626;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="chromeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F3F4F6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D1D5DB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9CA3AF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Bike Shadow -->
+  <ellipse cx="200" cy="275" rx="170" ry="18" fill="#00000035"/>
+  
+  <!-- Main Frame with realistic curves -->
+  <path d="M85 185 Q95 175 105 170 L140 125 Q150 120 160 120 L200 120 Q210 120 220 125 L260 145 Q270 150 275 160 L280 185 Q275 195 270 200 L240 205 Q230 207 220 205 L120 205 Q110 203 100 200 Q90 195 85 185 Z" fill="url(#bikeFrameGradient)" stroke="#991B1B" stroke-width="2"/>
+  
+  <!-- Frame Highlight -->
+  <path d="M95 175 Q105 165 115 160 L150 130 L190 130 Q200 130 210 135 L245 155 Q255 160 260 170" stroke="#FCA5A5" stroke-width="2" fill="none" opacity="0.7"/>
+  
+  <!-- Engine Block with realistic details -->
+  <rect x="160" y="165" width="85" height="45" rx="10" fill="url(#engineGradient)" stroke="#1F2937" stroke-width="2"/>
+  <rect x="170" y="175" width="65" height="25" rx="6" fill="#4B5563" stroke="#374151" stroke-width="1"/>
+  <!-- Engine cooling fins -->
+  <g stroke="#9CA3AF" stroke-width="1" opacity="0.6">
+    <line x1="175" y1="170" x2="175" y2="205"/>
+    <line x1="185" y1="170" x2="185" y2="205"/>
+    <line x1="195" y1="170" x2="195" y2="205"/>
+    <line x1="205" y1="170" x2="205" y2="205"/>
+    <line x1="215" y1="170" x2="215" y2="205"/>
+    <line x1="225" y1="170" x2="225" y2="205"/>
+  </g>
+  
+  <!-- Fuel Tank with realistic shape and reflection -->
+  <ellipse cx="200" cy="145" rx="45" ry="25" fill="url(#tankGradient)" stroke="#B91C1C" stroke-width="2"/>
+  <ellipse cx="200" cy="140" rx="40" ry="20" fill="#F87171" stroke="#EF4444" stroke-width="1"/>
+  <!-- Tank reflection -->
+  <ellipse cx="190" cy="135" rx="15" ry="8" fill="#FFFFFF" opacity="0.4"/>
+  
+  <!-- Seat with realistic leather texture -->
+  <ellipse cx="245" cy="155" rx="30" ry="12" fill="#1F2937" stroke="#000000" stroke-width="2"/>
+  <ellipse cx="245" cy="152" rx="25" ry="9" fill="#374151" stroke="#1F2937" stroke-width="1"/>
+  <!-- Seat stitching -->
+  <path d="M225 152 Q245 150 265 152" stroke="#6B7280" stroke-width="1" fill="none"/>
+  
+  <!-- Handlebars with realistic chrome -->
+  <rect x="115" y="112" width="70" height="8" rx="4" fill="url(#chromeGradient)" stroke="#9CA3AF" stroke-width="2"/>
+  <!-- Handlebar grips -->
+  <circle cx="120" cy="116" r="6" fill="#1F2937" stroke="#000000" stroke-width="1"/>
+  <circle cx="180" cy="116" r="6" fill="#1F2937" stroke="#000000" stroke-width="1"/>
+  <!-- Brake levers -->
+  <ellipse cx="125" cy="110" rx="8" ry="4" fill="#9CA3AF" stroke="#6B7280" stroke-width="1"/>
+  <ellipse cx="175" cy="110" rx="8" ry="4" fill="#9CA3AF" stroke="#6B7280" stroke-width="1"/>
+  
+  <!-- Front Fork with realistic suspension -->
+  <rect x="135" y="120" width="10" height="85" rx="5" fill="url(#chromeGradient)" stroke="#9CA3AF" stroke-width="2"/>
+  <rect x="155" y="120" width="10" height="85" rx="5" fill="url(#chromeGradient)" stroke="#9CA3AF" stroke-width="2"/>
+  <!-- Fork springs -->
+  <g stroke="#D1D5DB" stroke-width="1" opacity="0.7">
+    <line x1="140" y1="130" x2="140" y2="190"/>
+    <line x1="160" y1="130" x2="160" y2="190"/>
+  </g>
+  
+  <!-- Rear Suspension with shock absorber -->
+  <rect x="270" y="165" width="8" height="65" rx="4" fill="url(#chromeGradient)" stroke="#9CA3AF" stroke-width="2"/>
+  <circle cx="274" cy="180" r="4" fill="#EF4444" stroke="#DC2626" stroke-width="1"/>
+  
+  <!-- Front Wheel with realistic tire and rim -->
+  <circle cx="150" cy="235" r="42" fill="url(#wheelGradient)" stroke="#000000" stroke-width="3"/>
+  <circle cx="150" cy="235" r="32" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+  <circle cx="150" cy="235" r="22" fill="#6B7280" stroke="#374151" stroke-width="1"/>
+  <circle cx="150" cy="235" r="12" fill="#D1D5DB" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- Rear Wheel with realistic tire and rim -->
+  <circle cx="280" cy="235" r="42" fill="url(#wheelGradient)" stroke="#000000" stroke-width="3"/>
+  <circle cx="280" cy="235" r="32" fill="#374151" stroke="#1F2937" stroke-width="2"/>
+  <circle cx="280" cy="235" r="22" fill="#6B7280" stroke="#374151" stroke-width="1"/>
+  <circle cx="280" cy="235" r="12" fill="#D1D5DB" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- Detailed Wheel Spokes -->
+  <g stroke="#E5E7EB" stroke-width="1.5" opacity="0.9">
+    <!-- Front wheel spokes -->
+    <line x1="150" y1="213" x2="150" y2="257"/>
+    <line x1="128" y1="235" x2="172" y2="235"/>
+    <line x1="134" y1="219" x2="166" y2="251"/>
+    <line x1="166" y1="219" x2="134" y2="251"/>
+    <line x1="139" y1="213" x2="161" y2="257"/>
+    <line x1="161" y1="213" x2="139" y2="257"/>
+    <!-- Rear wheel spokes -->
+    <line x1="280" y1="213" x2="280" y2="257"/>
+    <line x1="258" y1="235" x2="302" y2="235"/>
+    <line x1="264" y1="219" x2="296" y2="251"/>
+    <line x1="296" y1="219" x2="264" y2="251"/>
+    <line x1="269" y1="213" x2="291" y2="257"/>
+    <line x1="291" y1="213" x2="269" y2="257"/>
+  </g>
+  
+  <g stroke="#D1D5DB" stroke-width="1">
+    <line x1="280" y1="210" x2="280" y2="250"/>
+    <line x1="260" y1="230" x2="300" y2="230"/>
+    <line x1="265" y1="215" x2="295" y2="245"/>
+    <line x1="295" y1="215" x2="265" y2="245"/>
+  </g>
+  
+  <!-- Headlight -->
+  <circle cx="120" cy="130" r="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+  <circle cx="120" cy="130" r="5" fill="#FBBF24"/>
+  
+  <!-- Taillight -->
+  <circle cx="300" cy="170" r="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+  <circle cx="300" cy="170" r="3" fill="#F87171"/>
+  
+  <!-- Exhaust Pipe -->
+  <rect x="240" y="190" width="40" height="8" rx="4" fill="#9CA3AF" stroke="#6B7280" stroke-width="2"/>
+  <rect x="275" y="192" width="8" height="4" rx="2" fill="#374151"/>
+  
+  <!-- Brake Discs -->
+  <circle cx="150" cy="230" r="15" fill="none" stroke="#D1D5DB" stroke-width="2"/>
+  <circle cx="280" cy="230" r="15" fill="none" stroke="#D1D5DB" stroke-width="2"/>
+  
+  <!-- Chain -->
+  <path d="M200 180 Q240 190 270 200" stroke="#6B7280" stroke-width="3" fill="none"/>
+  
+  <!-- Footpegs -->
+  <rect x="190" y="185" width="12" height="4" rx="2" fill="#9CA3AF" stroke="#6B7280" stroke-width="1"/>
+  <rect x="250" y="185" width="12" height="4" rx="2" fill="#9CA3AF" stroke="#6B7280" stroke-width="1"/>
+</svg>

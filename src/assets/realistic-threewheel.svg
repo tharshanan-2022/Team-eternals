@@ -1,0 +1,110 @@
+<svg width="200" height="150" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for realistic appearance -->
+    <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="30%" stop-color="#FFA500"/>
+      <stop offset="70%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#FF6347"/>
+    </linearGradient>
+    
+    <radialGradient id="wheelGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#2C2C2C"/>
+      <stop offset="60%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    
+    <linearGradient id="rimGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E6E6E6"/>
+      <stop offset="50%" stop-color="#CCCCCC"/>
+      <stop offset="100%" stop-color="#999999"/>
+    </linearGradient>
+    
+    <linearGradient id="windshieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#87CEEB" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4682B4" stop-opacity="0.6"/>
+    </linearGradient>
+    
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="3" dy="6" stdDeviation="4" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Shadow -->
+  <ellipse cx="100" cy="140" rx="80" ry="8" fill="#000000" opacity="0.2"/>
+  
+  <!-- Rear wheels (2) -->
+  <circle cx="50" cy="120" r="18" fill="url(#wheelGradient)" filter="url(#shadow)"/>
+  <circle cx="50" cy="120" r="12" fill="url(#rimGradient)"/>
+  <circle cx="50" cy="120" r="6" fill="#333333"/>
+  
+  <circle cx="150" cy="120" r="18" fill="url(#wheelGradient)" filter="url(#shadow)"/>
+  <circle cx="150" cy="120" r="12" fill="url(#rimGradient)"/>
+  <circle cx="150" cy="120" r="6" fill="#333333"/>
+  
+  <!-- Front wheel -->
+  <circle cx="100" cy="130" r="20" fill="url(#wheelGradient)" filter="url(#shadow)"/>
+  <circle cx="100" cy="130" r="14" fill="url(#rimGradient)"/>
+  <circle cx="100" cy="130" r="8" fill="#333333"/>
+  
+  <!-- Main body -->
+  <path d="M 30 100 Q 30 70 50 60 L 150 60 Q 170 70 170 100 L 170 110 Q 170 120 160 120 L 40 120 Q 30 120 30 110 Z" 
+        fill="url(#bodyGradient)" filter="url(#shadow)"/>
+  
+  <!-- Passenger compartment -->
+  <path d="M 45 100 Q 45 75 60 65 L 140 65 Q 155 75 155 100 L 155 105 L 45 105 Z" 
+        fill="#FFB347" stroke="#FF8C00" stroke-width="1"/>
+  
+  <!-- Windshield -->
+  <path d="M 60 65 L 140 65 Q 150 70 150 80 L 150 95 L 50 95 Q 50 80 60 65 Z" 
+        fill="url(#windshieldGradient)" stroke="#4682B4" stroke-width="1"/>
+  
+  <!-- Driver seat -->
+  <rect x="70" y="80" width="25" height="20" rx="3" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  
+  <!-- Passenger seat -->
+  <rect x="105" y="80" width="25" height="20" rx="3" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  
+  <!-- Headlights -->
+  <circle cx="45" cy="85" r="6" fill="#FFFACD" stroke="#FFD700" stroke-width="2"/>
+  <circle cx="155" cy="85" r="6" fill="#FFFACD" stroke="#FFD700" stroke-width="2"/>
+  
+  <!-- Side mirrors -->
+  <ellipse cx="35" cy="75" rx="4" ry="3" fill="#C0C0C0" stroke="#999999" stroke-width="1"/>
+  <ellipse cx="165" cy="75" rx="4" ry="3" fill="#C0C0C0" stroke="#999999" stroke-width="1"/>
+  
+  <!-- Door handles -->
+  <rect x="25" y="90" width="3" height="8" rx="1" fill="#C0C0C0"/>
+  <rect x="172" y="90" width="3" height="8" rx="1" fill="#C0C0C0"/>
+  
+  <!-- Roof details -->
+  <path d="M 60 65 Q 100 55 140 65" stroke="#FF6347" stroke-width="2" fill="none"/>
+  
+  <!-- License plate area -->
+  <rect x="85" y="115" width="30" height="8" rx="2" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+  <text x="100" y="121" text-anchor="middle" font-family="Arial" font-size="6" fill="#000000">THREE</text>
+  
+  <!-- Exhaust pipe -->
+  <rect x="25" y="110" width="8" height="3" rx="1" fill="#696969" stroke="#2F4F4F" stroke-width="1"/>
+  
+  <!-- Wheel spokes -->
+  <g stroke="#CCCCCC" stroke-width="1" fill="none">
+    <!-- Rear left wheel spokes -->
+    <line x1="38" y1="108" x2="62" y2="132"/>
+    <line x1="62" y1="108" x2="38" y2="132"/>
+    <line x1="50" y1="102" x2="50" y2="138"/>
+    <line x1="32" y1="120" x2="68" y2="120"/>
+    
+    <!-- Rear right wheel spokes -->
+    <line x1="138" y1="108" x2="162" y2="132"/>
+    <line x1="162" y1="108" x2="138" y2="132"/>
+    <line x1="150" y1="102" x2="150" y2="138"/>
+    <line x1="132" y1="120" x2="168" y2="120"/>
+    
+    <!-- Front wheel spokes -->
+    <line x1="85" y1="115" x2="115" y2="145"/>
+    <line x1="115" y1="115" x2="85" y2="145"/>
+    <line x1="100" y1="110" x2="100" y2="150"/>
+    <line x1="80" y1="130" x2="120" y2="130"/>
+  </g>
+</svg>
