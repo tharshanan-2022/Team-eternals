@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
-import { User, Mail, Phone, Lock, Eye, EyeOff, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { User as UserType } from '../types';
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   onLogin: (user: UserType, token: string) => void;
+}
+
+interface ResetForm {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface OtpForm {
+  email: string;
+  otp: string;
 }
 
 interface LoginForm {
@@ -22,17 +33,18 @@ interface RegisterForm {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+  type Mode = 'login' | 'register' | 'forgotPassword' | 'verifyOtp' | 'resetPassword';
+
+  const [mode, setMode] = useState<Mode>('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
-  const [loginForm, setLoginForm] = useState<LoginForm>({
-    email: '',
-    password: ''
-  });
-  
+
+  const [forgotForm, setForgotForm] = useState({ email: '' });
+  const [otpForm, setOtpForm] = useState<OtpForm>({ email: '', otp: '' });
+  const [resetForm, setResetForm] = useState<ResetForm>({ email: '', password: '', confirmPassword: '' });
+  const [loginForm, setLoginForm] = useState<LoginForm>({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState<RegisterForm>({
     name: '',
     email: '',
@@ -41,12 +53,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
     confirmPassword: ''
   });
 
-  //use Api
   const API_BASE_URL = 'http://localhost:5000/api';
 
   const resetForms = () => {
     setLoginForm({ email: '', password: '' });
     setRegisterForm({ name: '', email: '', phone: '', password: '', confirmPassword: '' });
+    setForgotForm({ email: '' });
+    setOtpForm({ email: '', otp: '' });
+    setResetForm({ email: '', password: '', confirmPassword: '' });
     setError(null);
     setShowPassword(false);
     setShowConfirmPassword(false);
@@ -57,35 +71,28 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
     onClose();
   };
 
+  const switchMode = () => {
+    setMode(mode === 'login' ? 'register' : 'login');
+    setError(null);
+  };
+
+  // ======= Handlers =======
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginForm)
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Login failed');
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
-
-      // Store token in localStorage
       localStorage.setItem('taxi_booking_token', data.token);
-      
-      // Call onLogin with user data and token
       onLogin(data.user, data.token);
-      
-      // Close modal and reset forms
       handleClose();
-      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
@@ -98,49 +105,24 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
     setLoading(true);
     setError(null);
 
-    // Validate passwords match
     if (registerForm.password !== registerForm.confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
       return;
     }
 
-    // Validate password length
-    if (registerForm.password.length < 6) {
-      setError('Password must be at least 6 characters long');
-      setLoading(false);
-      return;
-    }
-
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: registerForm.name,
-          email: registerForm.email,
-          phone: registerForm.phone,
-          password: registerForm.password
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registerForm)
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Registration failed');
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
-      }
-
-      // Store token in localStorage
       localStorage.setItem('taxi_booking_token', data.token);
-      
-      // Call onLogin with user data and token
       onLogin(data.user, data.token);
-      
-      // Close modal and reset forms
       handleClose();
-      
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed');
     } finally {
@@ -148,9 +130,88 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
     }
   };
 
-  const switchMode = () => {
-    setMode(mode === 'login' ? 'register' : 'login');
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
     setError(null);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotForm.email })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to send OTP');
+
+      setOtpForm({ email: forgotForm.email, otp: '' });
+      setMode('verifyOtp');
+      alert(`OTP sent to ${forgotForm.email}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: otpForm.email, otp: otpForm.otp })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'OTP verification failed');
+
+      setResetForm({ email: otpForm.email, password: '', confirmPassword: '' });
+      setMode('resetPassword');
+      alert(`OTP verified for ${otpForm.email}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    if (resetForm.password !== resetForm.confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: resetForm.email,
+          password: resetForm.password,
+          confirmPassword: resetForm.confirmPassword
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Password reset failed');
+
+      setMode('login');
+      alert(`Password reset successful for ${resetForm.email}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -161,199 +222,79 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onLogin }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-2xl font-bold text-gray-900">
-            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+            {mode === 'login'
+              ? 'Welcome Back'
+              : mode === 'register'
+                ? 'Create Account'
+                : mode === 'forgotPassword'
+                  ? 'Forgot Password'
+                  : mode === 'verifyOtp'
+                    ? 'Verify OTP'
+                    : 'Reset Password'}
           </h2>
-          <button
-            onClick={handleClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
+          <button onClick={handleClose} className="p-2 hover:bg-gray-100 rounded-lg">
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6">
-          {error && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-              {error}
-            </div>
-          )}
+          {error && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">{error}</div>}
 
-          {mode === 'login' ? (
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Mail className="w-4 h-4 inline mr-2" />
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={loginForm.email}
-                  onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Lock className="w-4 h-4 inline mr-2" />
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    value={loginForm.password}
-                    onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? 'Signing In...' : 'Sign In'}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleRegister} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <User className="w-4 h-4 inline mr-2" />
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={registerForm.name}
-                  onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your full name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Mail className="w-4 h-4 inline mr-2" />
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={registerForm.email}
-                  onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Phone className="w-4 h-4 inline mr-2" />
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  required
-                  value={registerForm.phone}
-                  onChange={(e) => setRegisterForm({ ...registerForm, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter your phone number"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Lock className="w-4 h-4 inline mr-2" />
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    value={registerForm.password}
-                    onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Create a password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Lock className="w-4 h-4 inline mr-2" />
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    required
-                    value={registerForm.confirmPassword}
-                    onChange={(e) => setRegisterForm({ ...registerForm, confirmPassword: e.target.value })}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Confirm your password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? 'Creating Account...' : 'Create Account'}
-              </button>
-            </form>
-          )}
-
-          {/* Switch Mode */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}
-              <button
-                onClick={switchMode}
-                className="ml-2 text-blue-600 hover:text-blue-700 font-medium"
-              >
-                {mode === 'login' ? 'Sign Up' : 'Sign In'}
-              </button>
-            </p>
-          </div>
-
-          {/* Demo Credentials */}
+          {/* LOGIN */}
           {mode === 'login' && (
-            <div className="mt-4 p-3 bg-gray-100 rounded-lg">
-              <p className="text-sm text-gray-600 font-medium mb-1">Demo Credentials:</p>
-              <p className="text-xs text-gray-500">Email: demo@taxibooking.com</p>
-              <p className="text-xs text-gray-500">Password: demo123</p>
-            </div>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <input type="email" required value={loginForm.email} onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })} placeholder="Email" className="w-full px-3 py-2 border rounded-lg" />
+              <input type={showPassword ? 'text' : 'password'} required value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} placeholder="Password" className="w-full px-3 py-2 border rounded-lg" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
+              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">{loading ? 'Signing In...' : 'Sign In'}</button>
+              <button type="button" onClick={() => setMode('forgotPassword')} className="text-blue-600 text-sm mt-2">Forgot Password?</button>
+              <p className="mt-2 text-sm">Don't have an account? <button onClick={switchMode} className="text-blue-600">Sign Up</button></p>
+            </form>
           )}
+
+          {/* REGISTER */}
+          {mode === 'register' && (
+            <form onSubmit={handleRegister} className="space-y-4">
+              <input type="text" required placeholder="Name" value={registerForm.name} onChange={(e) => setRegisterForm({ ...registerForm, name: e.target.value })} className="w-full px-3 py-2 border rounded-lg" />
+              <input type="email" required placeholder="Email" value={registerForm.email} onChange={(e) => setRegisterForm({ ...registerForm, email: e.target.value })} className="w-full px-3 py-2 border rounded-lg" />
+              <input type="text" required placeholder="Phone" value={registerForm.phone} onChange={(e) => setRegisterForm({ ...registerForm, phone: e.target.value })} className="w-full px-3 py-2 border rounded-lg" />
+              <input type={showPassword ? 'text' : 'password'} required placeholder="Password" value={registerForm.password} onChange={(e) => setRegisterForm({ ...registerForm, password: e.target.value })} className="w-full px-3 py-2 border rounded-lg" />
+              <input type={showConfirmPassword ? 'text' : 'password'} required placeholder="Confirm Password" value={registerForm.confirmPassword} onChange={(e) => setRegisterForm({ ...registerForm, confirmPassword: e.target.value })} className="w-full px-3 py-2 border rounded-lg" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'} Passwords</button>
+              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">{loading ? 'Creating Account...' : 'Create Account'}</button>
+              <p className="mt-2 text-sm">Already have an account? <button onClick={switchMode} className="text-blue-600">Sign In</button></p>
+            </form>
+          )}
+
+          {/* FORGOT PASSWORD */}
+          {mode === 'forgotPassword' && (
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <input type="email" required value={forgotForm.email} onChange={(e) => setForgotForm({ email: e.target.value })} placeholder="Enter your email" className="w-full px-3 py-2 border rounded-lg" />
+              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">{loading ? 'Sending OTP...' : 'Send OTP'}</button>
+              <button type="button" onClick={() => setMode('login')} className="text-blue-600 text-sm mt-2">← Back to Sign In</button>
+            </form>
+          )}
+
+          {/* VERIFY OTP */}
+          {mode === 'verifyOtp' && (
+            <form onSubmit={handleVerifyOtp} className="space-y-4">
+              <p className="text-sm text-gray-600">OTP sent to {otpForm.email}</p>
+              <input type="text" required value={otpForm.otp} onChange={(e) => setOtpForm({ ...otpForm, otp: e.target.value })} placeholder="Enter OTP" className="w-full px-3 py-2 border rounded-lg" />
+              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">{loading ? 'Verifying...' : 'Verify OTP'}</button>
+              <button type="button" onClick={() => setMode('forgotPassword')} className="text-blue-600 text-sm mt-2">← Back</button>
+            </form>
+          )}
+
+          {/* RESET PASSWORD */}
+          {mode === 'resetPassword' && (
+            <form onSubmit={handleResetPassword} className="space-y-4">
+              <input type={showPassword ? 'text' : 'password'} required value={resetForm.password} onChange={(e) => setResetForm({ ...resetForm, password: e.target.value })} placeholder="New Password" className="w-full px-3 py-2 border rounded-lg" />
+              <input type={showConfirmPassword ? 'text' : 'password'} required value={resetForm.confirmPassword} onChange={(e) => setResetForm({ ...resetForm, confirmPassword: e.target.value })} placeholder="Confirm New Password" className="w-full px-3 py-2 border rounded-lg" />
+              <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg">{loading ? 'Resetting...' : 'Reset Password'}</button>
+              <button type="button" onClick={() => setMode('login')} className="text-blue-600 text-sm mt-2">← Back to Sign In</button>
+            </form>
+          )}
+
         </div>
       </div>
     </div>
