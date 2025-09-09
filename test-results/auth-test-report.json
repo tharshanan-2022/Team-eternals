@@ -1,0 +1,237 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-07T16:31:16.786Z",
+    "end": "2025-09-07T16:31:19.669Z",
+    "duration": 2883,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "04e99048-2087-4ff4-9283-47df46c2cd88",
+      "title": "",
+      "fullFile": "C:\\Users\\think\\OneDrive\\Documents\\TaxiBooking\\TaxiBooking\\project\\tests\\api\\auth.spec.cjs",
+      "file": "\\tests\\api\\auth.spec.cjs",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "847f4a9c-7889-49c5-9077-6dd7777efb90",
+          "title": "Authentication API",
+          "fullFile": "C:\\Users\\think\\OneDrive\\Documents\\TaxiBooking\\TaxiBooking\\project\\tests\\api\\auth.spec.cjs",
+          "file": "\\tests\\api\\auth.spec.cjs",
+          "beforeHooks": [
+            {
+              "title": "\"before each\" hook in \"Authentication API\"",
+              "fullTitle": "Authentication API \"before each\" hook in \"Authentication API\"",
+              "timedOut": false,
+              "duration": 307,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await delay(300);",
+              "err": {},
+              "uuid": "83c90942-e716-4926-9f2c-48133e8a32c6",
+              "parentUUID": "847f4a9c-7889-49c5-9077-6dd7777efb90",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "580ee3ab-18de-4e73-95e1-00ee3d7580a3",
+              "title": "POST /auth/login",
+              "fullFile": "C:\\Users\\think\\OneDrive\\Documents\\TaxiBooking\\TaxiBooking\\project\\tests\\api\\auth.spec.cjs",
+              "file": "\\tests\\api\\auth.spec.cjs",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should login user and return token with user info",
+                  "fullTitle": "Authentication API POST /auth/login should login user and return token with user info",
+                  "timedOut": false,
+                  "duration": 475,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const response = await client.post('/auth/login', {\n  email: USER_CREDENTIALS.email,\n  password: USER_CREDENTIALS.password\n});\nexpect(response.status).to.equal(200);\nexpect(response.data).to.have.property('token');\nexpect(response.data).to.have.property('user');\nexpect(response.data.user).to.have.property('email', USER_CREDENTIALS.email);\nexpect(response.data.token).to.be.a('string');",
+                  "err": {},
+                  "uuid": "78167081-1621-4d43-98de-8b166e1311d4",
+                  "parentUUID": "580ee3ab-18de-4e73-95e1-00ee3d7580a3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "should login admin and return token",
+                  "fullTitle": "Authentication API POST /auth/login should login admin and return token",
+                  "timedOut": false,
+                  "duration": 390,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const response = await client.post('/auth/login', {\n  email: ADMIN_CREDENTIALS.email,\n  password: ADMIN_CREDENTIALS.password\n});\nexpect(response.status).to.equal(200);\nexpect(response.data).to.have.property('token');\nexpect(response.data).to.have.property('user');\nexpect(response.data.user).to.have.property('email', ADMIN_CREDENTIALS.email);\nexpect(response.data.token).to.be.a('string');",
+                  "err": {},
+                  "uuid": "9ad61dc3-f97b-46a0-b936-846fa1a0764c",
+                  "parentUUID": "580ee3ab-18de-4e73-95e1-00ee3d7580a3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "should return 401 for invalid credentials",
+                  "fullTitle": "Authentication API POST /auth/login should return 401 for invalid credentials",
+                  "timedOut": false,
+                  "duration": 4,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const response = await client.post('/auth/login', {\n  email: 'invalid@example.com',\n  password: 'wrongpassword'\n});\nexpect(response.status).to.equal(401);\nexpect(response.data).to.have.property('error');",
+                  "err": {},
+                  "uuid": "64821f4e-77a4-4a5f-8470-37ef66dfe46e",
+                  "parentUUID": "580ee3ab-18de-4e73-95e1-00ee3d7580a3",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "78167081-1621-4d43-98de-8b166e1311d4",
+                "9ad61dc3-f97b-46a0-b936-846fa1a0764c",
+                "64821f4e-77a4-4a5f-8470-37ef66dfe46e"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 869,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "8bcaef4d-a86b-45ac-a7a3-11d865cf53a3",
+              "title": "GET /auth/profile",
+              "fullFile": "C:\\Users\\think\\OneDrive\\Documents\\TaxiBooking\\TaxiBooking\\project\\tests\\api\\auth.spec.cjs",
+              "file": "\\tests\\api\\auth.spec.cjs",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "should require authentication",
+                  "fullTitle": "Authentication API GET /auth/profile should require authentication",
+                  "timedOut": false,
+                  "duration": 7,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "client.clearAuth();\nconst response = await client.get('/auth/profile');\n\nexpect(response.status).to.equal(401);",
+                  "err": {},
+                  "uuid": "8e082eb5-d404-4d2d-96ab-c5266ebc9273",
+                  "parentUUID": "8bcaef4d-a86b-45ac-a7a3-11d865cf53a3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "should return user profile when authenticated",
+                  "fullTitle": "Authentication API GET /auth/profile should return user profile when authenticated",
+                  "timedOut": false,
+                  "duration": 468,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// First login\nconst loginResponse = await client.post('/auth/login', {\n  email: USER_CREDENTIALS.email,\n  password: USER_CREDENTIALS.password\n});\n\nclient.setBearerToken(loginResponse.data.token);\n\n// Then get profile\nconst profileResponse = await client.get('/auth/profile');\n\nexpect(profileResponse.status).to.equal(200);\nexpect(profileResponse.data).to.have.property('user');\nexpect(profileResponse.data.user).to.have.property('id');\nexpect(profileResponse.data.user).to.have.property('email', USER_CREDENTIALS.email);",
+                  "err": {},
+                  "uuid": "db895cfe-9125-4d86-955d-f285594002bf",
+                  "parentUUID": "8bcaef4d-a86b-45ac-a7a3-11d865cf53a3",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "8e082eb5-d404-4d2d-96ab-c5266ebc9273",
+                "db895cfe-9125-4d86-955d-f285594002bf"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 475,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.8.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "auth-test-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "test-results",
+        "reportFilename": "auth-test-report"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
